@@ -4,11 +4,14 @@ extends Spatial
 export (Array, NodePath) var exclude_paths = []
 export (int, LAYERS_3D_RENDER) var raycast_layers = 0x7FFFFFFF
 export (String) var collector_group = ""
+export (bool) var include_ambient_light = false
 
 var children: Array = []
 var excludes: Array = []
+var world: World
 
 func _ready():
+	world = get_world()
 	children = get_children()
 	for path in exclude_paths:
 		excludes.append(get_node(path))
@@ -20,6 +23,12 @@ func _get_configuration_warning():
 	return ""
 	
 func collect() -> float:
+	# Resolve Environment Brightness if enabled
+	var ambient_light = 0
+	if include_ambient_light:
+		ambient_light = world.environment.ambient_light_energy
+		
+	# Aggregate Point Brightness
 	var collected_level: float = 0.0
 	var count: int
 	var level: float
@@ -31,4 +40,4 @@ func collect() -> float:
 			count += child.influence
 		if count != 0:
 			collected_level += level / count
-	return collected_level
+	return collected_level + ambient_light

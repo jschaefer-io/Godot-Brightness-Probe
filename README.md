@@ -1,7 +1,7 @@
 # Brightness Probe
 This repository contains a basic implementation of a brightness/ light-level detection in the Godot Engine.
-The Brightness-Probe currently supports all Light Nodes (OmniLight, SpotLight, DirectionalLight) but is not
-yet configured to handle ambient light.
+The Brightness-Probe currently supports all Light Nodes (OmniLight, SpotLight, DirectionalLight) and the world
+environments ambient light energy.
 
 ## Node Types
 This addons comes with three Nodes, allowing granual control on which light sources are requested, which obstacle are ignored
@@ -21,6 +21,8 @@ a small number of exported values.
   A Collision Bit-Mask determining on which layer the raycasts are executed
 - **Collector Group:** \
   The Groupname of all BrightnessResolver-Nodes which this BrightnessCollector is aggregating it's light level from.
+- **Include Ambient Light**  \
+  If true, the current world environments ambient light energy will get added tot he aggregated light level value.
  
  A BrightnessCollector must have a collection of BrightnessProbe's as it's direct children. When the BrightnessCollector's
  public `collect()`-Method is called, a brightness check is executed on all BrightnessProbes and the average brightness is returned as
