@@ -26,7 +26,10 @@ func collect() -> float:
 	# Resolve Environment Brightness if enabled
 	var ambient_light = 0
 	if include_ambient_light:
-		ambient_light = world.environment.ambient_light_energy
+		if world.environment == null:
+			ambient_light = world.fallback_environment.ambient_light_energy
+		else:
+			ambient_light = world.environment.ambient_light_energy
 		
 	# Aggregate Point Brightness
 	var collected_level: float = 0.0
