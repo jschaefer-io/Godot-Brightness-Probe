@@ -1,8 +1,9 @@
 tool
 extends Spatial
 
-export (Array, NodePath) var exclude_paths
-export (String) var collector_group
+export (Array, NodePath) var exclude_paths = []
+export (String) var collector_group = ""
+export (int, LAYERS_3D_RENDER) var raycast_layers = 0
 
 var children: Array = []
 var excludes: Array = []
@@ -24,7 +25,7 @@ func collect() -> float:
 	var light_level: float = 0.0
 	for light in get_tree().get_nodes_in_group(collector_group):
 		for child in children:
-			light_level += child.influence * light.get_light_level(excludes, child.global_transform.origin)
+			light_level += child.influence * light.get_light_level(child.global_transform.origin, excludes, raycast_layers)
 			count += child.influence
 	if count == 0:
 		return light_level
