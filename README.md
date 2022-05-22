@@ -24,7 +24,7 @@ a small number of exported values.
  
  A BrightnessCollector must have a collection of BrightnessProbe's as it's direct children. When the BrightnessCollector's
  public `collect()`-Method is called, a brightness check is executed on all BrightnessProbes and the average brightness is returned as
- a float value from 0 to 1. (0 is Absolute Darkness)
+ a float value representing the brightness energy derived from the light sources light_energy property.
  
  ### BrightnessProbe
  A BrightnessProbe is a singular Point, which on which a Light-Level check is executed. It inherits from Spatial and can be freely

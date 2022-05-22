@@ -31,4 +31,4 @@ func collect() -> float:
 			count += child.influence
 		if count != 0:
 			collected_level += level / count
-	return min(collected_level, 1)
+	return collected_level

@@ -23,7 +23,7 @@ func _get_omni_light_level(target: Vector3, excludes: Array, raycast_layers: int
 		return 0.0
 	if !_is_line_of_sight(check_light.global_transform.origin, target, excludes, raycast_layers):
 		return 0.0
-	return pow(1 - distance / check_light.omni_range, check_light.omni_attenuation)
+	return check_light.light_energy * pow(1 - distance / check_light.omni_range, check_light.omni_attenuation)
 	
 func _get_spot_light_level(target: Vector3, excludes: Array, raycast_layers: int) -> float:
 	var check_light: SpotLight = light
@@ -37,7 +37,7 @@ func _get_spot_light_level(target: Vector3, excludes: Array, raycast_layers: int
 		return 0.0
 	if !_is_line_of_sight(check_light.global_transform.origin, target, excludes, raycast_layers):
 		return 0.0
-	var res = min(
+	var res = check_light.light_energy * min(
 		pow(1 - distance / check_light.spot_range, check_light.spot_attenuation),
 		pow(1 - angle / check_angle, 1 / check_light.spot_angle_attenuation)
 	)
@@ -47,7 +47,7 @@ func _get_directional_light_level(target: Vector3, excludes: Array, raycast_laye
 	if !_is_line_of_sight(target, light.global_transform.basis.z * 100000, excludes, raycast_layers):
 		return 0.0
 	var check_light: DirectionalLight = light
-	return min(check_light.light_energy, 1)
+	return check_light.light_energy * min(check_light.light_energy, 1)
 	
 func get_light_level(target: Vector3, excludes: Array, raycast_layers: int) -> float:
 	if light is OmniLight:
