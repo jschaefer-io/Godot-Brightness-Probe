@@ -2,8 +2,8 @@ tool
 extends Spatial
 
 export (Array, NodePath) var exclude_paths = []
+export (int, LAYERS_3D_RENDER) var raycast_layers = 0x7FFFFFFF
 export (String) var collector_group = ""
-export (int, LAYERS_3D_RENDER) var raycast_layers = 0
 
 var children: Array = []
 var excludes: Array = []
